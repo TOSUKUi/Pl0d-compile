@@ -1,0 +1,7 @@
+function double(x)
+begin
+  return 2*x
+  end;
+  begin
+    write double(5)
+    end.    
