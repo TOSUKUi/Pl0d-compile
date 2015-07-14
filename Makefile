@@ -1,5 +1,5 @@
 
-CC	= gcc-4.9
+CC	= gcc
 #CFLAGS	= 
 #CFLAGS	= -DLATEX
 CFLAGS	= -DTOKEN_HTML

@@ -1,5 +1,5 @@
 
-   /*************** compile.c *************/
+/*************** compile.c *************/
 
 #include "getSource.h"
 #ifndef TBL
@@ -105,6 +105,8 @@ void varDecl()				/*　変数宣言のコンパイル　*/
 			token = nextToken();
 		}else
 			errorMissingId();
+	      
+		/*単数*/
 		if (token.kind!=Comma){		/*　次がコンマなら変数宣言が続く　*/
 			if (token.kind==Id){		/*　次が名前ならコンマを忘れたことにする　*/
 				errorInsert(Comma);
@@ -172,14 +174,41 @@ void statement()			/*　文のコンパイル　*/
 			genCodeT(sto, tIndex);				/*　左辺への代入命令　*/
 			return;
 		case If:					/*　if文のコンパイル　*/
-			token = nextToken();
+		        token = nextToken();
 			condition();					/*　条件式のコンパイル　*/
 			token = checkGet(token, Then);		/*　"then"のはず　*/
 			backP = genCodeV(jpc, 0);			/*　jpc命令　*/
 			statement();					/*　文のコンパイル　*/
+			/*-------------*/
+			
+			/*変更部分*/
 			backPatch(backP);				/*　上のjpc命令にバックパッチ　*/
 			return;
-	
+			/*--------------------
+			  変更部分
+			----------------------*/
+		case Do:
+		  token = nextToken(); /**/		  
+		  backP2 = nextCode(); /*while分のconditionが真だった時の飛び先*/
+		  statement();         /*文のコンパイル*/		  
+		  token = checkGet(nextToken(),While);/*"while"の筈*/
+		  condition();
+      		  backP = genCodeV(jpc,0);  /*偽の時飛び出すjpc命令*/
+		  genCodeV(jmp,backP2);
+		  backPatch(backP);
+		  return;
+		  
+		case Repeat:		  
+		  token = nextToken();
+		  backP2 = nextCode();
+		  statement();
+		  token = checkGet(nextToken(),Until);/*untilの筈*/
+		  condition();
+		  genCodeV(jpc,backP2);		  		  
+		  backP = genCodeV(jmp,0);
+		  backPatch(backP);
+		  return;
+
 		  
 		case Ret:					/*　return文のコンパイル　*/
 			token = nextToken();
@@ -239,7 +268,7 @@ void statement()			/*　文のコンパイル　*/
 int isStBeginKey(Token t)			/*　トークンtは文の先頭のキーか？　*/
 {
 	switch (t.kind){
-	case Id: case Do://変更点
+	case Id: case Do: case Repeat: case Until://変更点
 	case If: case Begin: case Ret:
 	case While: case Write: case WriteLn:
 		return 1;

@@ -1,5 +1,5 @@
 
-   /*************** getSource.h ***************/
+/*************** getSource.h ***************/
 
 #include <stdio.h>
 #ifndef TBL
@@ -10,40 +10,44 @@
 #define MAXNAME 31			/*　名前の最大長さ　*/
  
 typedef  enum  keys {			/*　キーや文字の種類（名前）　*/
-	Begin, End,				/*　予約語の名前　*/
-	If, Then,
-	While, Do,
-	Ret, Func, 
-	Var, Const, Odd,
-	Write, WriteLn,
-	end_of_KeyWd,				/*　予約語の名前はここまで　*/
-	Plus, Minus,				/*　演算子と区切り記号の名前　*/
-	Mult, Div,	
-	Lparen, Rparen,
-	Equal, Lss, Gtr,
-	NotEq, LssEq, GtrEq, 
-	Comma, Period, Semicolon,
-	Assign,
-	end_of_KeySym,				/*　演算子と区切り記号の名前はここまで　*/
-	Id, Num, nul,				/*　トークンの種類　*/
-	end_of_Token,
-	letter, digit, colon, others		/*　上記以外の文字の種類　*/
+  Begin, End,				/*　予約語の名前　*/
+  If, Then,
+  While, Do,
+  Ret, Func, 
+  Var, Const, Odd,
+  Write, WriteLn,
+  Repeat,Until,
+  Else,
+  end_of_KeyWd,
+  
+/*----------------------------------予約語の名前はここまで　*/
+  Plus, Minus,				/*　演算子と区切り記号の名前　*/
+  Mult, Div,	
+  Lparen, Rparen,
+  Equal, Lss, Gtr,
+  NotEq, LssEq, GtrEq, 
+  Comma, Period, Semicolon,
+  Assign,
+  end_of_KeySym,				/*　演算子と区切り記号の名前はここまで　*/
+  Id, Num, nul,				/*　トークンの種類　*/
+  end_of_Token,
+  letter, digit, colon, others		/*　上記以外の文字の種類　*/
 } KeyId;
 
 typedef  struct  token {			/*　トークンの型　*/
-	KeyId kind;				/*　トークンの種類かキーの名前　*/
-	union {
-		char id[MAXNAME]; 		/*　Identfierの時、その名前　*/
-		int value;				/*　Numの時、その値　*/
-	} u;
+  KeyId kind;				/*　トークンの種類かキーの名前　*/
+  union {
+    char id[MAXNAME]; 		/*　Identfierの時、その名前　*/
+    int value;				/*　Numの時、その値　*/
+  } u;
 }Token;
 
 Token nextToken();				/*　次のトークンを読んで返す　*/
 Token checkGet(Token t, KeyId k);	/*　t.kind==kのチェック　*/
-	/*　t.kind==kなら、次のトークンを読んで返す　*/
-	/*　t.kind!=kならエラーメッセージを出し、tとkが共に記号、または予約語なら　*/
-	/*　tを捨て、次のトークンを読んで返す（tをkで置き換えたことになる）　*/
-	/*　それ以外の場合、kを挿入したことにして、tを返す　*/
+/*　t.kind==kなら、次のトークンを読んで返す　*/
+/*　t.kind!=kならエラーメッセージを出し、tとkが共に記号、または予約語なら　*/
+/*　tを捨て、次のトークンを読んで返す（tをkで置き換えたことになる）　*/
+/*　それ以外の場合、kを挿入したことにして、tを返す　*/
 
 int openSource(char fileName[]); 	/*　ソースファイルのopen　*/
 void closeSource();			/*　ソースファイルのclose　*/

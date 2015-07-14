@@ -4,7 +4,7 @@ begin
    do begin
       write x;
       writeln;
-      x := x + 1
-   end
+      x := x + 1;
+   end.
    while x < 3
 end.

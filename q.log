@@ -1,0 +1,16 @@
+This is TeX, Version 3.14159265 (TeX Live 2014) (preloaded format=tex 2015.5.16)  14 JUL 2015 14:43
+**do.pl0.re
+(/usr/local/texlive/2014/texmf-dist/tex/latex/tools/q.tex
+! Interruption.
+l.2 
+    %% This is file `q.tex',
+? q
+OK, entering \batchmode...
+ File ignored
+)
+! Emergency stop.
+<*> do.pl0.re
+             
+*** (job aborted, no legal \end found)
+
+No pages of output.

@@ -134,6 +134,7 @@ void updateRef(int i)		/*　配列refの更新　*/
 		case eq: return;
 		case ls: return;
 		case gr: return;
+
 		case neq: return;
 		case lseq: return;
 		case greq: return;

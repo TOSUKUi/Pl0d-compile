@@ -1,0 +1,228 @@
+
+codegen.c,605
+#define TBL7,104
+#define MAXCODE 12,166
+#define MAXMEM 13,217
+#define MAXREG 14,272
+#define MAXLEVEL 15,331
+typedef struct inst{inst17,380
+	OpCode  opCode;18,423
+		RelAddr addr;20,448
+		int value;21,464
+		Operator optr;22,477
+	}u;u23,494
+}Inst;Inst24,499
+static char ref[ref26,507
+static Inst code[code27,591
+static int cIndex 28,644
+int nextCode(33,878
+int genCodeV(38,955
+int genCodeT(46,1111
+int genCodeO(54,1284
+int genCodeR(62,1442
+void checkMax(73,1746
+void backPatch(80,1879
+void listCode(85,1979
+void updateRef(106,2284
+void printCode(152,3112
+void execute(201,4471
+
+compile.c,351
+#define TBL6,82
+#define MINERROR 11,142
+#define FIRSTADDR 12,196
+static Token token;14,260
+int compile(28,934
+void block(44,1460
+void constDecl(72,2414
+void varDecl(99,3158
+void funcDecl(122,3730
+void statement(159,4988
+int isStBeginKey(242,7759
+void expression(254,7983
+void term(277,8330
+void factor(293,8559
+void condition(350,10063
+
+getSource.c,1212
+#define MAXLINE 8,108
+#define MAXERROR 9,154
+#define MAXNUM 10,214
+#define TAB 11,257
+#define INSERT_C 12,299
+#define DELETE_C 13,347
+#define TYPE_C 14,395
+static FILE *fpi;fpi16,450
+static FILE *fptex;fptex17,494
+static char line[line18,542
+static int lineIndex;19,600
+static char ch;20,651
+static Token cToken;22,696
+static KindT idKind;23,748
+static int spaces;24,800
+static int CR;25,862
+static int printed;26,905
+static int errorNo 28,957
+struct keyWd 35,1281
+	char *word;word36,1333
+	KeyId keyId;37,1346
+static struct keyWd KeyWdT[KeyWdT40,1364
+int isKeyWd(75,1994
+int isKeySym(80,2076
+static KeyId charClassT[charClassT87,2192
+static void initCharClassT(89,2257
+int openSource(109,2872
+void closeSource(131,3391
+void initSource(137,3508
+void finalSource(161,4270
+void errorNoCheck(194,4880
+void errorType(209,5286
+void errorInsert(228,5772
+void errorMissingId(249,6523
+void errorMissingOp(264,6937
+void errorDelete(279,7353
+void errorMessage(329,9362
+void errorF(341,9672
+int errorN(357,10101
+char nextChar(362,10166
+Token nextToken(380,10671
+Token checkGet(472,12584
+static void printSpaces(490,13136
+void printcToken(518,13618
+void setIdKind 586,15792
+
+main.c,15
+int main(8,97
+
+table.c,925
+#define TBL5,49
+#define MAXTABLE 10,111
+#define MAXNAME 11,158
+#define MAXLEVEL 12,202
+typedef struct tableE 14,250
+	KindT kind;15,306
+	char name[name16,340
+		int value;18,391
+			RelAddr raddr;20,440
+			int pars;21,491
+		}f;f22,536
+		RelAddr raddr;23,542
+	}u;u24,599
+}TabelE;TabelE25,604
+static TabelE nameTable[nameTable27,614
+static int tIndex 28,665
+static int level 29,719
+static int index[index30,773
+static int addr[addr31,860
+static int localAddr;32,944
+static int tfIndex;33,1009
+static char* kindName(35,1030
+void blockBegin(45,1228
+void blockEnd(62,1703
+int bLevel(69,1860
+int fPars(74,1929
+void enterT(79,2037
+int enterTfunc(87,2197
+int enterTpar(98,2531
+int enterTvar(107,2771
+int enterTconst(116,2982
+void endpar(124,3154
+void changeV(133,3399
+int searchT(138,3525
+KindT kindT(155,3944
+RelAddr relAddr(160,4028
+int val(165,4126
+int pars(170,4214
+int frameL(175,4314
+
+codegen.h,798
+typedef enum codes{codes4,59
+	lit,5,104
+	lit, opr,5,104
+	lit, opr, lod,5,104
+	lit, opr, lod, sto,5,104
+	lit, opr, lod, sto, cal,5,104
+	lit, opr, lod, sto, cal, ret,5,104
+	lit, opr, lod, sto, cal, ret, ict,5,104
+	lit, opr, lod, sto, cal, ret, ict, jmp,5,104
+	lit, opr, lod, sto, cal, ret, ict, jmp, jpc5,104
+}OpCode;OpCode6,149
+typedef enum ops{ops8,159
+	neg,9,204
+	neg, add,9,204
+	neg, add, sub,9,204
+	neg, add, sub, mul,9,204
+	neg, add, sub, mul, div,9,204
+	neg, add, sub, mul, div, odd,9,204
+	neg, add, sub, mul, div, odd, eq,9,204
+	neg, add, sub, mul, div, odd, eq, ls,9,204
+	neg, add, sub, mul, div, odd, eq, ls, gr,9,204
+	neq,10,247
+	neq, lseq,10,247
+	neq, lseq, greq,10,247
+	neq, lseq, greq, wrt,10,247
+	neq, lseq, greq, wrt, wrl10,247
+}Operator;Operator11,274
+
+getSource.h,986
+#define TBL6,82
+#define MAXNAME 10,122
+typedef  enum  keys 12,168
+	Begin,13,225
+	Begin, End,13,225
+	If,14,262
+	If, Then,14,262
+	While,15,273
+	While, Do,15,273
+	Ret,16,285
+	Ret, Func,16,285
+	Var,17,298
+	Var, Const,17,298
+	Var, Const, Odd,17,298
+	Write,18,316
+	Write, WriteLn,18,316
+	end_of_KeyWd,19,333
+	Plus,20,382
+	Plus, Minus,20,382
+	Mult,21,432
+	Mult, Div,21,432
+	Lparen,22,445
+	Lparen, Rparen,22,445
+	Equal,23,462
+	Equal, Lss,23,462
+	Equal, Lss, Gtr,23,462
+	NotEq,24,480
+	NotEq, LssEq,24,480
+	NotEq, LssEq, GtrEq,24,480
+	Comma,25,503
+	Comma, Period,25,503
+	Comma, Period, Semicolon,25,503
+	Assign,26,530
+	end_of_KeySym,27,539
+	Id,28,601
+	Id, Num,28,601
+	Id, Num, nul,28,601
+	end_of_Token,29,642
+	letter,30,657
+	letter, digit,30,657
+	letter, digit, colon,30,657
+	letter, digit, colon, others	30,657
+} KeyId;31,717
+typedef  struct  token 33,727
+	KeyId kind;34,775
+		char id[id36,835
+		int value;37,889
+	} u;38,929
+}Token;Token39,935
+
+table.h,241
+typedef enum kindT 4,35
+	varId,5,82
+	varId, funcId,5,82
+	varId, funcId, parId,5,82
+	varId, funcId, parId, constId5,82
+}KindT;KindT6,113
+typedef struct relAddr{relAddr7,121
+	int level;8,189
+	int addr;9,201
+}RelAddr;RelAddr10,212

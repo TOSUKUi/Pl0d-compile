@@ -1,13 +1,13 @@
 
-   /******************** codegen.h ********************/
+/******************** codegen.h ********************/
 
 typedef enum codes{			/*　命令語のコード　*/
-	lit, opr, lod, sto, cal, ret, ict, jmp, jpc
+  lit, opr, lod, sto, cal, ret, ict, jmp, jpc
 }OpCode;
 
 typedef enum ops{			/*　演算命令のコード　*/
-	neg, add, sub, mul, div, odd, eq, ls, gr,
-	neq, lseq, greq, wrt, wrl
+  neg, add, sub, mul, div, odd, eq, ls, gr,
+  neq, lseq, greq, wrt, wrl
 }Operator;
 
 int genCodeV(OpCode op, int v);		/*　命令語の生成、アドレス部にv　*/
