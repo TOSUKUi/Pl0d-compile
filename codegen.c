@@ -82,6 +82,10 @@ void backPatch(int i)		/*　命令語のバックパッチ（次の番地を）　*/
 	code[i].u.value = cIndex+1;
 }
 
+void backChange(int i,int p){
+  code[i].u.value = p;
+}
+
 void listCode()			/*　命令語のリスティング　*/
 {
 	int i;

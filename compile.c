@@ -160,7 +160,7 @@ void statement()			/*　文のコンパイル　*/
 {
 	int tIndex;
 	KindT k;
-	int backP, backP2;				/*　バックパッチ用　*/
+	int backP, backP2,backP3;				/*　バックパッチ用　*/
 
 	while(1) {
 		switch (token.kind) {
@@ -180,9 +180,13 @@ void statement()			/*　文のコンパイル　*/
 			backP = genCodeV(jpc, 0);			/*　jpc命令　*/
 			statement();					/*　文のコンパイル　*/
 			/*-------------*/
-			
+		        token = checkGet(token,Else);
+			backP2 = genCodeV(jmp,0);
+			backP3 = nextCode();
+			statement();			
 			/*変更部分*/
-			backPatch(backP);				/*　上のjpc命令にバックパッチ　*/
+			backChange(backP,backP3);
+			backPatch(backP2);/*　上のjmp命令にバックパッチ　*/
 			return;
 			/*--------------------
 			  変更部分

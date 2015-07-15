@@ -15,7 +15,7 @@ int genCodeT(OpCode op, int ti);		/*　命令語の生成、アドレスは名前表から　*/
 int genCodeO(Operator p);			/*　命令語の生成、アドレス部に演算命令　*/
 int genCodeR();					/*　ret命令語の生成　*/
 void backPatch(int i);			/*　命令語のバックパッチ（次の番地を）　*/
-
+void backChange(int,int);
 int nextCode();			/*　次の命令語のアドレスを返す　*/
 void listCode();			/*　目的コード（命令語）のリスティング　*/
 void execute();			/*　目的コード（命令語）の実行　*/
